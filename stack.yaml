@@ -1,0 +1,28 @@
+services:
+  www:
+    image: openresty/openresty:alpine
+    ports:
+      - 6969:80
+    volumes:
+      - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./app:/app
+    environment:
+      OBERON_ENVIRONMENT: development
+
+  memcached:
+    image: memcached:1.6-alpine
+    ports:
+      - 11211:11211
+
+  redis:
+    image: redis:7.4-alpine
+    ports:
+      - 6379:6379
+
+  mysql:
+    image: mysql:9.2
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: oberon
