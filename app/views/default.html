@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 	<head>
-		<title>{{ title }}</title>
+		<meta charset="utf-8">
 		<link rel="stylesheet" href="/static/style.css">
+		<title>{{ title }}</title>
 	</head>
 	<body>
 		<img src="/static/nasa-oberon.jpg">
@@ -13,6 +14,12 @@
 			<li><a href="/">Template example</a></li>
 			<li><a href="/api">JSON API example</a></li>
 			<li><a href="/routes">Lists all attached routes</a></li>
+		</ul>
+		<p>10 Moons of the Solar System</p>
+		<ul>
+			{% for _, moon in ipairs(moons) do %}
+			<li>{{ moon }}</li>
+			{% end %}
 		</ul>
 	</body>
 </html>
