@@ -17,13 +17,9 @@ don't need.
 
 ## Included dependencies
 
-- [x] https://github.com/APItools/router.lua
-- [x] https://github.com/bungle/lua-resty-template
-- [ ] https://github.com/bungle/lua-resty-session
-- [ ] https://github.com/bungle/lua-resty-reqargs
-- [ ] https://github.com/bungle/lua-resty-validation
+- https://github.com/bungle/lua-resty-template
 
-## Internals
+## OpenResty internals
 
 - https://github.com/openresty/lua-resty-memcached
 - https://github.com/openresty/lua-resty-redis
