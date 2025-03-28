@@ -49,16 +49,20 @@ function tinyrouter.resolve()
 		params = {},
 	}
 
-	-- Parses request body for form or json data.
-	if request.method == "POST" or request.method == "PUT" then
-		ngx.req.read_body()
-		if ngx.var.content_type == "application/json" then
-			local cjson = require("cjson")
-			request.data = cjson.decode(ngx.req.get_body_data())
-		elseif ngx.var.content_type == "application/x-www-form-urlencoded" then
-			request.data = ngx.req.get_post_args()
+	-- Parses request body for form or json data, etc.
+	if request.method == "POST"
+		or request.method == "PUT"
+		or request.method == "PATCH"
+		or request.method == "DELETE"
+		then
+			ngx.req.read_body()
+			if ngx.var.content_type == "application/json" then
+				local cjson = require("cjson")
+				request.data = cjson.decode(ngx.req.get_body_data())
+			elseif ngx.var.content_type == "application/x-www-form-urlencoded" then
+				request.data = ngx.req.get_post_args()
+			end
 		end
-	end
 
 	-- Trying to find a match.
 	local matching_route = nil
