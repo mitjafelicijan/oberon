@@ -60,7 +60,7 @@ function tinyrouter.resolve()
 		end
 	end
 
-	-- Trying to find a match
+	-- Trying to find a match.
 	local matching_route = nil
 	for _, item in pairs(routes[request.method]) do
 		-- How many segments are matching.
