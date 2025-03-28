@@ -1,7 +1,7 @@
-local router = require("resty.router")
+local router = require("resty.router").new()
 
 -- Defining global context that all routes inherit.
-_G.octx = {
+ngx.ctx.internal = {
 	environment = os.getenv("OBERON_ENVIRONMENT"),
 
 	-- Comment/uncomment what you need.
@@ -13,14 +13,25 @@ _G.octx = {
 -- Importing the routes.
 local default = require("routes.default")
 local api = require("routes.api")
-local routes = require("routes.routes")
+local forms = require("routes.forms")
 
--- Declaring routes - put stuff here.
-router.get("/", default.get)
-router.get("/api", api.get)
-router.get("/routes", function()
-	routes:get(router)
-end)
+router:match("GET", "/", default.get)
+router:match("GET", "/api", api.get)
+router:match("GET", "/forms", forms.get)
 
--- Handling all the routes.
-return router.handle()
+local ok, errmsg = router:execute(
+	ngx.var.request_method,
+	ngx.var.request_uri,
+	ngx.req.get_uri_args(),
+	nil, --ngx.req.get_post_args(),
+	nil  --{other_arg = 1}
+)
+
+if ok then
+	ngx.status = ngx.HTTP_OK
+else
+	ngx.status = ngx.HTTP_NOT_FOUND
+	ngx.say("404 Not found")
+	ngx.log(ngx.ERR, errmsg)
+	ngx.exit(ngx.HTTP_NOT_FOUND)
+end
