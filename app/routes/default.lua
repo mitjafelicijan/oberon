@@ -1,6 +1,6 @@
 local handler = {}
 
-function handler:get()
+function handler.get(request)
 	ngx.header["Content-Type"] = "text/html"
 
 	ngx.ctx.internal.template.render("default.html", {

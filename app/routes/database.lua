@@ -2,7 +2,7 @@ local cjson = require "cjson"
 
 local handler = {}
 
-function handler:get()
+function handler.get(request)
 	ngx.header["Content-Type"] = "text/html"
 
 	-- MySQL example.

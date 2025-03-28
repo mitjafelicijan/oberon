@@ -8,11 +8,12 @@ To run it locally use `make stack`. This will start OpenResty and all the
 databases and then you can start tinkering with it and disabling things you
 don't need.
 
-## Reading material
+## Documentation and Resources
 
 - https://openresty-reference.readthedocs.io/en/latest/Lua_Nginx_API/
 - https://ketzacoatl.github.io/posts/2017-03-06-lua-and-openresty-interlude-issues-with-luarocks-and-alpine.html
 - https://github.com/openresty/lua-resty-core
+- https://github.com/LewisJEllis/awesome-lua
 
 ## Included dependencies
 

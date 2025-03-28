@@ -1,4 +1,4 @@
-local router = require("resty.router").new()
+local tinyrouter = require("resty.tinyrouter")
 
 -- Defining global context that all routes inherit.
 ngx.ctx.internal = {
@@ -16,25 +16,18 @@ local default = require("routes.default")
 local api = require("routes.api")
 local forms = require("routes.forms")
 local database = require("routes.database")
+local params = require("routes.params")
 
-router:match("GET", "/", default.get)
-router:match("GET", "/api", api.get)
-router:match("GET", "/forms", forms.get)
-router:match("GET", "/database", database.get)
+tinyrouter.match("get", "/", default.get)
+tinyrouter.match("get", "/api", api.get)
+tinyrouter.match("get", "/forms", forms.get)
+tinyrouter.match("get", "/database", database.get)
+tinyrouter.match("get", "/params/:id/meta/:key", params.get)
 
-local ok, errmsg = router:execute(
-	ngx.var.request_method,
-	ngx.var.request_uri,
-	ngx.req.get_uri_args(),
-	nil, --ngx.req.get_post_args(),
-	nil  --{other_arg = 1}
-)
-
-if ok then
-	ngx.status = ngx.HTTP_OK
-else
+-- Custom 404 handler.
+tinyrouter.handle404(function(request)
 	ngx.status = ngx.HTTP_NOT_FOUND
-	ngx.say("404 Not found")
-	ngx.log(ngx.ERR, errmsg)
-	ngx.exit(ngx.HTTP_NOT_FOUND)
-end
+	ngx.say("My custom 404 handler!")
+end)
+
+tinyrouter.resolve()

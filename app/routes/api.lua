@@ -13,7 +13,7 @@ local function random_string(length)
 	return table.concat(result)
 end
 
-function handler:get()
+function handler.get(request)
 	ngx.header["Content-Type"] = "application/json"
 
 	local random_numbers = {}
@@ -34,6 +34,7 @@ function handler:get()
 		random_numbers = random_numbers,
 		random_strings = random_strings,
 		tags = { "lua", "openresty" },
+		request = request,
 	}
 
 	ngx.print(cjson.encode(data))
