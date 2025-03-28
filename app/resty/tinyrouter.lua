@@ -27,7 +27,6 @@ function tinyrouter.handle404(handler)
 	error_handlers.handle404 = handler
 end
 
-
 function tinyrouter.match(method, path, handler)
 	table.insert(routes[string.upper(method)], {
 		path = path,
@@ -48,7 +47,8 @@ function tinyrouter.resolve()
 
 	local matching_route = nil
 	for _, item in pairs(routes[request.method]) do
-		local segments_matching = 0 -- How many segments do match.
+		-- How many segments do match.
+		local segments_matching = 0
 
 		-- Found matching number of path segments.
 		if #item.path_segments == #request.path_segments then
@@ -56,10 +56,7 @@ function tinyrouter.resolve()
 				-- Check if maybe this is a named parameter.
 				if is_named_parameter(match) then
 					segments_matching = segments_matching + 1
-					table.insert(request.params, {
-						key = match,
-						value = request.path_segments[idx],
-					})
+					request.params[match:sub(2)] = request.path_segments[idx]
 				elseif match == request.path_segments[idx] then
 					segments_matching = segments_matching + 1
 				end
