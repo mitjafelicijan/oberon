@@ -21,6 +21,7 @@ local params = require("routes.params")
 tinyrouter.match("get", "/", default.get)
 tinyrouter.match("get", "/api", api.get)
 tinyrouter.match("get", "/forms", forms.get)
+tinyrouter.match("post", "/forms", forms.post)
 tinyrouter.match("get", "/database", database.get)
 tinyrouter.match("get", "/params/:id/meta/:key", params.get)
 

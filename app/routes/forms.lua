@@ -1,3 +1,5 @@
+local cjson = require("cjson")
+
 local handler = {}
 
 function handler.get(request)
@@ -8,6 +10,12 @@ function handler.get(request)
 		environment = ngx.ctx.internal.environment,
 	})
 
+	return ngx.exit(ngx.HTTP_OK)
+end
+
+function handler.post(request)
+	ngx.header["Content-Type"] = "application/json"
+	ngx.say(cjson.encode(request))
 	return ngx.exit(ngx.HTTP_OK)
 end
 

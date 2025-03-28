@@ -4,7 +4,10 @@ local routes = {
 	GET = {},
 	POST = {},
 	PUT = {},
+	PATCH = {},
 	DELETE = {},
+	HEAD = {},
+	OPTIONS = {},
 }
 
 local error_handlers = {
@@ -42,12 +45,25 @@ function tinyrouter.resolve()
 		method = ngx.req.get_method(),
 		path_segments = path_segments(ngx.var.uri),
 		query = ngx.req.get_uri_args(),
+		content_type = ngx.var.content_type,
 		params = {},
 	}
 
+	-- Parses request body for form or json data.
+	if request.method == "POST" or request.method == "PUT" then
+		ngx.req.read_body()
+		if ngx.var.content_type == "application/json" then
+			local cjson = require("cjson")
+			request.data = cjson.decode(ngx.req.get_body_data())
+		elseif ngx.var.content_type == "application/x-www-form-urlencoded" then
+			request.data = ngx.req.get_post_args()
+		end
+	end
+
+	-- Trying to find a match
 	local matching_route = nil
 	for _, item in pairs(routes[request.method]) do
-		-- How many segments do match.
+		-- How many segments are matching.
 		local segments_matching = 0
 
 		-- Found matching number of path segments.
