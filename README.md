@@ -8,14 +8,6 @@ To run it locally use `make stack`. This will start OpenResty and all the
 databases and then you can start tinkering with it and disabling things you
 don't need.
 
-## Internals
-
-- https://github.com/openresty/lua-resty-memcached
-- https://github.com/openresty/lua-resty-redis
-- https://github.com/openresty/lua-resty-mysql
-- https://github.com/openresty/lua-resty-redis
-- https://github.com/openresty/lua-resty-string
-
 ## Reading material
 
 - https://openresty-reference.readthedocs.io/en/latest/Lua_Nginx_API/
@@ -24,8 +16,16 @@ don't need.
 
 ## Included dependencies
 
-- https://github.com/APItools/router.lua
-- https://github.com/bungle/lua-resty-template
-- https://github.com/bungle/lua-resty-session
-- https://github.com/bungle/lua-resty-reqargs
-- https://github.com/bungle/lua-resty-validation
+- [x] https://github.com/APItools/router.lua
+- [x] https://github.com/bungle/lua-resty-template
+- [ ] https://github.com/bungle/lua-resty-session
+- [ ] https://github.com/bungle/lua-resty-reqargs
+- [ ] https://github.com/bungle/lua-resty-validation
+
+## Internals
+
+- https://github.com/openresty/lua-resty-memcached
+- https://github.com/openresty/lua-resty-redis
+- https://github.com/openresty/lua-resty-mysql
+- https://github.com/openresty/lua-resty-redis
+- https://github.com/openresty/lua-resty-string
