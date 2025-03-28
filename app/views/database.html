@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="/static/style.css">
+		<title>{{ title }}</title>
+	</head>
+	<body>
+		<a href="/">« back</a>
+		<h1>{{ title }}</h1>
+
+		<ul>
+			<li>MySQL:
+				<ul>
+					<li>response: <mark>{{ mysql.value }}</mark></li>
+					<li>error: <mark>{{ mysql.err }}</mark></li>
+				</ul>
+			</li>
+			<li>Redis:
+				<ul>
+					<li>response: <mark>{{ redis.value }}</mark></li>
+					<li>error: <mark>{{ redis.err }}</mark></li>
+				</ul>
+			</li>
+			<li>Memcached:
+				<ul>
+					<li>response: <mark>{{ memcached.value }}</mark></li>
+					<li>error: <mark>{{ memcached.err }}</mark></li>
+				</ul>
+			</li>
+		</ul>
+	</body>
+</html>

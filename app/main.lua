@@ -6,6 +6,7 @@ ngx.ctx.internal = {
 
 	-- Comment/uncomment what you need.
 	template = require("bootstrap.template").init(),
+	mysql = require("bootstrap.mysql").init(),
 	memcached = require("bootstrap.memcached").init(),
 	redis = require("bootstrap.redis").init(),
 }
@@ -14,10 +15,12 @@ ngx.ctx.internal = {
 local default = require("routes.default")
 local api = require("routes.api")
 local forms = require("routes.forms")
+local database = require("routes.database")
 
 router:match("GET", "/", default.get)
 router:match("GET", "/api", api.get)
 router:match("GET", "/forms", forms.get)
+router:match("GET", "/database", database.get)
 
 local ok, errmsg = router:execute(
 	ngx.var.request_method,
