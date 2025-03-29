@@ -4,9 +4,10 @@ This is a tiny project boilerplate for OpenResty and Lua website that includes
 basic router, memcached, Redis and MySQL with accompanying examples how to use
 all this.
 
-To run it locally use `make stack`. This will start OpenResty and all the
-databases and then you can start tinkering with it and disabling things you
-don't need.
+> [!NOTE]
+> To run it locally use `make stack`. This will start OpenResty and all the
+> databases and then you can start tinkering with it and disabling things you
+> don't need.
 
 ## Project Structure
 
@@ -70,6 +71,15 @@ Key features:
 - Query parameter support
 - Request body parsing
 - Custom 404 handling
+
+> [!TIP]
+> - Use the request object to access:
+>   - `request.params` for named route parameters
+>   - `request.query` for query string parameters
+>   - `request.body` for POST request data
+>   - `request.headers` for HTTP headers
+>   - `request.method` for HTTP method
+>   - `request.uri` for the full request URI
 
 ### Bootstrap Modules
 
@@ -145,20 +155,9 @@ end
 ngx.ctx.internal.memcached:set("temp:key", "temporary data", 300)  -- Expires in 5 minutes
 ```
 
-Key points about database usage:
-
 > [!NOTE]
 > All database connections are managed through the bootstrap modules and must
 > be properly closed when done to prevent resource leaks.
-
-> [!IMPORTANT] 
-> Always use parameterized queries for MySQL to prevent SQL injection attacks.
-> Error handling is critical for all database operations.
-
-> [!TIP]
-> - Consider using transactions for complex MySQL operations
-> - Set appropriate expiration times for cache operations
-> - Use appropriate data types and serialization for cache storage
 
 ## Development Setup
 
