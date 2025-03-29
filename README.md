@@ -7,7 +7,8 @@ all this.
 > [!NOTE]
 > To run it locally use `make stack`. This will start OpenResty and all the
 > databases and then you can start tinkering with it and disabling things you
-> don't need.
+> don't need. After Docker Compose finishes starting up the services, you can
+> access the application at http://localhost:6969.
 
 ## Project Structure
 
