@@ -37,96 +37,39 @@ The main application file sets up the core components and routing system:
 - Defines route handlers for different endpoints
 - Implements custom 404 handling
 
-### Routing Examples
+### Routing System
 
-The project uses a simple and intuitive routing system. Here are some examples:
+The project uses a simple and intuitive routing system with support for named
+parameters:
 
-1. Basic Route Handler:
+1. Basic Route Definition:
 ```lua
--- In routes/default.lua
-local handler = {}
-
-function handler.get(request)
-    ngx.header["Content-Type"] = "text/html"
-    ngx.ctx.internal.template.render("index.html", {
-        title = "Welcome to Oberon"
-    })
-    return ngx.exit(ngx.HTTP_OK)
-end
-
-return handler
+-- In main.lua
+tinyrouter.match("get", "/", default.get)
+tinyrouter.match("post", "/forms", forms.post)
 ```
 
-2. Form Handling (GET/POST):
+2. Named Parameters:
 ```lua
--- In routes/forms.lua
-local cjson = require("cjson")
+-- Define route with named parameters
+tinyrouter.match("get", "/params/:id/meta/:key", params.get)
 
-local handler = {}
-
+-- Access parameters in handler
 function handler.get(request)
-    -- Render form template
-    ngx.ctx.internal.template.render("forms.html", {
-        title = "Forms example!",
-        environment = ngx.ctx.internal.environment
-    })
-    return ngx.exit(ngx.HTTP_OK)
-end
-
-function handler.post(request)
-    -- Handle form submission
-    ngx.header["Content-Type"] = "application/json"
-    ngx.say(cjson.encode(request))
-    return ngx.exit(ngx.HTTP_OK)
-end
-
-return handler
-```
-
-3. Dynamic Route Parameters:
-```lua
--- In routes/params.lua
-local handler = {}
-
-function handler.get(request)
-    -- Access route parameters
     local id = request.params.id
     local key = request.params.key
     -- Process parameters...
 end
-
-return handler
 ```
 
-4. API Endpoint:
-```lua
--- In routes/api.lua
-local handler = {}
+Key features:
 
-function handler.get(request)
-    ngx.header["Content-Type"] = "application/json"
-    -- Return JSON response
-    ngx.say(cjson.encode({
-        status = "success",
-        data = { message = "API is working" }
-    }))
-    return ngx.exit(ngx.HTTP_OK)
-end
-
-return handler
-```
-
-Key points about routing
-
-- Each route is defined in a separate file under the `routes/` directory
-- Route handlers are simple Lua modules that return a table with handler
-  functions
-- HTTP methods (GET, POST) are handled by corresponding functions in the
-  handler module
-- The `request` object contains route parameters, query parameters, and request
-  body
-- Responses can be HTML (using template engine) or JSON
-- Proper HTTP status codes and content types should be set
+- Support for all HTTP methods (GET, POST, etc.)
+- Named parameters using `:param` syntax
+- Automatic parameter extraction
+- Query parameter support
+- Request body parsing
+- Custom 404 handling
 
 ### Bootstrap Modules
 
@@ -139,8 +82,8 @@ The application includes several bootstrap modules for common functionality:
 
 ### Database Usage Examples
 
-The project supports multiple database types through bootstrap modules. Here are
-examples for each:
+The project supports multiple database types through bootstrap modules. Here
+are examples for each:
 
 1. MySQL Database Operations:
 ```lua
@@ -204,13 +147,18 @@ ngx.ctx.internal.memcached:set("temp:key", "temporary data", 300)  -- Expires in
 
 Key points about database usage:
 
-- All database connections are managed through the bootstrap modules
-- Error handling is important for all database operations
-- Connections should be properly closed when done
-- Use parameterized queries for MySQL to prevent SQL injection
-- Cache operations should include appropriate expiration times
-- Consider using transactions for complex MySQL operations
-- Use appropriate data types and serialization for cache storage
+> [!NOTE]
+> All database connections are managed through the bootstrap modules and must
+> be properly closed when done to prevent resource leaks.
+
+> [!IMPORTANT] 
+> Always use parameterized queries for MySQL to prevent SQL injection attacks.
+> Error handling is critical for all database operations.
+
+> [!TIP]
+> - Consider using transactions for complex MySQL operations
+> - Set appropriate expiration times for cache operations
+> - Use appropriate data types and serialization for cache storage
 
 ## Development Setup
 
@@ -219,13 +167,6 @@ Key points about database usage:
 - OpenResty
 - Docker (optional)
 - Make
-
-### Local Development
-
-1. Clone the repository
-2. Install dependencies
-3. Configure environment variables
-4. Run the development server
 
 ### Docker Deployment
 
