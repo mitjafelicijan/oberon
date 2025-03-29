@@ -192,7 +192,7 @@ To pass additional environment variables to the Lua application:
    ```
 3. Access in Lua code via `os.getenv("YOUR_NEW_VARIABLE")`
 
-> [!NOTE]
+> [!IMPORTANT]
 > This is required because OpenResty/Nginx does not automatically expose
 > environment variables to Lua for security reasons. Each variable must be
 > explicitly allowed in the nginx configuration.
